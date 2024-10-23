@@ -12,13 +12,15 @@
 
 using namespace std;
 
-vector<Edge> readGraph(ifstream &file, int &n) {
+vector<Edge> readGraph(ifstream &file, int16_t &n) {
     vector<Edge> edges;
-    file >> n;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+//    file >> n;
+    file.read((char*) &n, sizeof(int16_t));
+    for (int16_t i = 0; i < n; i++) {
+        for (int16_t j = 0; j < n; j++) {
             int16_t temp;
-            file >> temp;
+//            file >> temp;
+            file.read((char *) &temp, sizeof(int16_t ));
             if (temp != 0) edges.push_back({i, j, temp});
         }
     }
@@ -26,7 +28,7 @@ vector<Edge> readGraph(ifstream &file, int &n) {
     return edges;
 }
 
-vector<Edge> readGraph2(int16_t matrix[10][10], int &n) {
+vector<Edge> readGraph2(int16_t matrix[10][10], int16_t &n) {
     n = 10;
     vector<Edge> edges;
     for (int i = 0; i < n; i++) {

@@ -7,8 +7,8 @@
 
 #include "Edge.h"
 
-std::vector<Edge> readGraph(std::ifstream &file, int &n);
-std::vector<Edge> readGraph2(int16_t matrix[10][10], int &n);
+std::vector<Edge> readGraph(std::ifstream &file, int16_t &n);
+std::vector<Edge> readGraph2(int16_t matrix[10][10], int16_t &n);
 int BellmanFord(int n, int src, std::vector<Edge> &edges, int *dist, int *prev);
 
 #endif  // LAB_1_BELLMAN_FORD_JOHNSON__BELLMANFORD_H

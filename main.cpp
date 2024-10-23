@@ -10,7 +10,8 @@
 using namespace std;
 
 int main() {
-    ifstream file("../tests/matrix_t1_104.txt");
+//    ifstream file("../tests/matrix_t1_100.txt");
+    ifstream file("../tests/bm_t1_104.bm", ios::binary);
 
     int16_t matrix[10][10] = {
         INF, 20,INF,16,INF,11,INF,INF,INF,INF,
@@ -33,7 +34,7 @@ int main() {
 
     cout << "OK!\n";
 
-    int n = 0;
+    int16_t n = 0;
     int src = 0;
 
     vector<Edge> edges = readGraph(file, n);

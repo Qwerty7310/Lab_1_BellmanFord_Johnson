@@ -1,14 +1,18 @@
 #ifndef LAB_1_BELLMAN_FORD_JOHNSON__BELLMANFORD_H
 #define LAB_1_BELLMAN_FORD_JOHNSON__BELLMANFORD_H
 
-#include <cstdint>
-#include <fstream>
 #include <vector>
 
-#include "Edge.h"
-
-std::vector<Edge> readGraph(std::ifstream &file, int16_t &n);
-std::vector<Edge> readGraph2(int16_t matrix[10][10], int16_t &n);
+#include "Graph.h"
+///
+/// \param n размер матрицы
+/// \param src начальная вершина
+/// \param edges массив ребер
+/// \param dist массив расстояний
+/// \param prev массив предыдущих вершин в кратчайшем пути
+/// \return -1 при наличии цикла с отрицательным весом, 0 - при отсутствии
 int BellmanFord(int n, int src, std::vector<Edge> &edges, int *dist, int *prev);
+
+int BellmanFord(int n, int src, int **matrix, int *dist, int *prev);
 
 #endif  // LAB_1_BELLMAN_FORD_JOHNSON__BELLMANFORD_H

@@ -5,15 +5,71 @@
 #include "BellmanFord.h"
 #include "Dijkstra.h"
 #include "Graph.h"
+#include "Johnson.h"
+#include "cxxopts.hpp"
 
 #define INF INT16_MAX
 
 using namespace std;
 
-int main() {
-//    ifstream file("../tests/matrix_t1_100.txt");
-    ifstream file("../tests/bm_t1_109.bm", ios::binary);
+void run(ifstream &input_file, ofstream &output_file);
 
+int main(int argc, char *argv[]) {
+    try {
+        cxxopts::Options options("Lab_1_Bellman_Ford_Johnson", "Lab1");
+
+        // Определение возможных опций
+        options.add_options()("o,output", "Имя выходного файла",
+                              cxxopts::value<std::string>()->default_value("default_output.txt"))(
+            "input", "Имя входного файла", cxxopts::value<std::string>())("h,help", "Вывод справки");
+
+        // Указываем, что "input" — позиционный аргумент
+        options.parse_positional({"input"});
+
+        // Парсим аргументы
+        auto result = options.parse(argc, argv);
+
+        // Проверяем, запрошена ли справка
+        if (result.count("help")) {
+            cout << options.help() << endl;
+            return 0;
+        }
+
+        // Проверяем наличие обязательного аргумента "input"
+        if (!result.count("input")) {
+            cerr << "Ошибка: необходим входной файл." << endl;
+            return 1;
+        }
+
+        // Получаем значения аргументов
+        string input_file = result["input"].as<string>();
+        string output_file = result["output"].as<string>();
+
+        // Ваш основной код с использованием входного и выходного файлов
+        ifstream input(input_file, ios::binary);
+        if (!input.is_open()) {
+            cerr << "Ошибка: не удается открыть входной файл " << input_file << endl;
+            return 1;
+        }
+
+        ofstream output(output_file);
+        if (!output.is_open()) {
+            cerr << "Ошибка: не удается открыть выходной файл " << output_file << endl;
+            return 1;
+        }
+
+        run(input, output);
+
+    } catch (const std::exception &e) {
+        cerr << "Ошибка при разборе аргументов: " << e.what() << endl;
+        return 1;
+    }
+
+    return 0;
+}
+
+void run(ifstream &input, ofstream &output) {
+    /*
     int16_t matr[10][10] = {
         INF, 20,INF,16,INF,11,INF,INF,INF,INF,
         INF, INF,6,INF,1,INF,INF,INF,INF,INF,
@@ -39,33 +95,49 @@ int main() {
         INF, INF,INF,INF,INF,INF,INF,2,INF,INF,
         INF, INF,INF,INF,INF,INF,INF,INF,5,INF,
     };
-
-
-
-    if (!file) {
-        cout << "File is not found!\n";
-        return 0;
-    }
-
-    cout << "OK!\n";
+    */
 
     int16_t n = 0;
+
+    int **matrix;  // Матрица смежности
+    readGraph(input, n, &matrix);
+
     int src = 0;
+    int *dist = new int[n];
+    int *pred = new int[n];
+    if (BellmanFord(n, src, matrix, dist, pred) == -1) {
+        output << "Цикл с отрицательным весом" << endl;
+        return;
+    }
 
-//    vector<Edge> edges = readGraph(file, n);
-    int **matrix;
-//    readGraph(file, n, &matrix);
+    for (int i = 1; i < n; i++) {
+        output << 0 << " - " << i << ": ";
+        if (dist[i] == INF)
+            output << "∞" << endl;
+        else
+            output << dist[i] << endl;
+    }
 
-    readGraph3(matrix_for_D_FW, n, &matrix);
-//    vector<Graph> edges = readGraph2(matrix, n);
-    auto *dist = new int[n];
-    auto *prev = new int[n];
+    delete[] dist;
+    delete[] pred;
 
-//    BellmanFord(n, src, edges, dist, prev);
-//    BellmanFord(n, src, matrix, dist, prev);
-    Dijkstra(n, src, matrix, dist, prev);
+    // Матрица кратчайших расстояний
+    int **shortest_dist = new int *[n];
+    for (int i = 0; i < n; i++) shortest_dist[i] = new int[n];
+    Johnson(n, matrix, shortest_dist);
 
+    int diam = diameter(n, matrix);
+    int rad = radius(n, matrix);
 
+    vector<int> central, peripheral;
+    vertices(n, matrix, central, peripheral);
 
-    return 0;
+    output << diam << " " << rad << endl;
+    for (auto v : central) output << v << " ";
+    output << endl;
+    for (auto v : peripheral) output << v << " ";
+    output << endl;
+
+    for (int i = 0; i < n; i++) delete[] shortest_dist[i];
+    delete[] shortest_dist;
 }

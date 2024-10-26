@@ -69,7 +69,7 @@ void readGraph3(int matrix[10][10], int16_t &n, int ***matrix1) {
 
     for (int16_t i = 0; i < n; i++) {
         for (int16_t j = 0; j < n; j++) {
-                (*matrix1)[i][j] = matrix[i][j];
+            (*matrix1)[i][j] = matrix[i][j];
         }
     }
 }

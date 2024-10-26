@@ -8,8 +8,6 @@
 
 #include "Graph.h"
 
-//#define INF INT16_MAX
-
 using namespace std;
 
 int BellmanFord(int n, int src, vector<Edge> &edges, int *dist, int *prev) {
@@ -81,16 +79,8 @@ int BellmanFord(int n, int src, int **matrix, int *dist, int *prev) {
     }
 
     if (flag_negative_cycle) {
-        cout << "Негативный цикл\n";
+        cout << "Цикл с отрицательным весом\n";
         return -1;
-    }
-
-    for (int i = 0; i < n; i++) {
-        cout << src << " - " << i << ": ";
-        if (dist[i] == INF)
-            cout << "∞" << endl;
-        else
-            cout << dist[i] << endl;
     }
 
     return 0;

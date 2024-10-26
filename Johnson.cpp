@@ -56,7 +56,7 @@ void eccentricity(int n, int **matrix, int *res) {
 }
 
 int radius(int n, int **matrix) {
-    int *arr_eccentricity = new int[n]; // эксцентриситеты вершин
+    int *arr_eccentricity = new int[n];  // эксцентриситеты вершин
     eccentricity(n, matrix, arr_eccentricity);
     int min = arr_eccentricity[0];
     for (int i = 1; i < n; i++)
@@ -67,7 +67,7 @@ int radius(int n, int **matrix) {
 }
 
 int diameter(int n, int **matrix) {
-    int *arr_eccentricity = new int[n]; // эксцентриситеты вершин
+    int *arr_eccentricity = new int[n];  // эксцентриситеты вершин
     eccentricity(n, matrix, arr_eccentricity);
     int max = arr_eccentricity[0];
     for (int i = 1; i < n; i++)
@@ -78,10 +78,10 @@ int diameter(int n, int **matrix) {
 }
 
 void vertices(int n, int **matrix, vector<int> &central, vector<int> &peripheral) {
-    int rad = radius(n, matrix); // радиус графа
-    int diam = diameter(n, matrix); // диаметр графа
+    int rad = radius(n, matrix);     // радиус графа
+    int diam = diameter(n, matrix);  // диаметр графа
 
-    int *arr_eccentricity = new int[n]; // эксцентриситеты вершин
+    int *arr_eccentricity = new int[n];  // эксцентриситеты вершин
     eccentricity(n, matrix, arr_eccentricity);
 
     for (int i = 0; i < n; i++) {

@@ -2,7 +2,7 @@
 #define LAB_1_BELLMAN_FORD_JOHNSON_JOHNSON_H
 
 #include <vector>
-
+/// Алгоритм Джонсона
 /// \param n количество вершин
 /// \param matr_input матрица смежности
 /// \param res матрица кратчайших расстояний
@@ -17,19 +17,19 @@ void eccentricity(int n, const int **matrix, int *res);
 
 /// Радиус графа
 /// \param n количество вершин
-/// \param matrix матрица смежности
+/// \param matrix матрица кратчайших расстояний
 /// \return радиус графа
 int radius(int n, int **matrix);
 
 /// Диаметр графа
 /// \param n количество вершин
-/// \param matrix матрица смежности
+/// \param matrix матрица кратчайших расстояний
 /// \return диаметр графа
 int diameter(int n, int **matrix);
 
 /// Центральные и периферийные вершины
 /// \param n количество вершин
-/// \param matrix матрица смежности
+/// \param matrix матрица кратчайших расстояний
 /// \param central вектор центральных вершин
 /// \param peripheral вектор периферийных вершин
 void vertices(int n, int **matrix, std::vector<int> &central, std::vector<int> &peripheral);

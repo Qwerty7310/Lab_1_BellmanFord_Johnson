@@ -69,34 +69,6 @@ int main(int argc, char *argv[]) {
 }
 
 void run(ifstream &input, ofstream &output) {
-    /*
-    int16_t matr[10][10] = {
-        INF, 20,INF,16,INF,11,INF,INF,INF,INF,
-        INF, INF,6,INF,1,INF,INF,INF,INF,INF,
-        INF, INF,INF,INF,INF,INF,5,INF,INF,INF,
-        INF, INF,INF,INF,3,INF,INF,9,1,3,
-        INF, INF,INF,INF,INF,INF,1,INF,INF,4,
-        INF, INF,INF,7,INF,INF,INF,INF,INF,INF,
-        INF, INF,INF,INF,INF,INF,INF,INF,INF,2,
-        INF, INF,INF,INF,INF,6,INF,INF,INF,INF,
-        INF, INF,INF,INF,INF,INF,INF,2,INF,INF,
-        INF, INF,INF,INF,INF,INF,INF,INF,5,INF,
-    };
-
-    int matrix_for_D_FW[10][10] = {
-        INF, 20,INF,16,INF,11,INF,INF,INF,INF,
-        INF, INF,6,INF,1,INF,INF,INF,INF,INF,
-        INF, INF,INF,INF,INF,INF,5,INF,INF,INF,
-        INF, INF,INF,INF,3,INF,INF,9,1,3,
-        INF, INF,INF,INF,INF,INF,1,INF,INF,4,
-        INF, INF,INF,7,INF,INF,INF,INF,INF,INF,
-        INF, INF,INF,INF,INF,INF,INF,INF,INF,2,
-        INF, INF,INF,INF,INF,6,INF,INF,INF,INF,
-        INF, INF,INF,INF,INF,INF,INF,2,INF,INF,
-        INF, INF,INF,INF,INF,INF,INF,INF,5,INF,
-    };
-    */
-
     int16_t n = 0;
 
     int **matrix;  // Матрица смежности
@@ -126,11 +98,11 @@ void run(ifstream &input, ofstream &output) {
     for (int i = 0; i < n; i++) shortest_dist[i] = new int[n];
     Johnson(n, matrix, shortest_dist);
 
-    int diam = diameter(n, matrix);
-    int rad = radius(n, matrix);
+    int diam = diameter(n, shortest_dist);
+    int rad = radius(n, shortest_dist);
 
     vector<int> central, peripheral;
-    vertices(n, matrix, central, peripheral);
+    vertices(n, shortest_dist, central, peripheral);
 
     output << diam << " " << rad << endl;
     for (auto v : central) output << v << " ";
